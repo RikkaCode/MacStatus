@@ -1,28 +1,25 @@
 //
 //  AppDelegate.swift
-//  test
+//  MacStatus
+//
+//  App 装配总入口：构造 ModuleRegistry，把 Network / Memory 等模块注册并激活；
+//  订阅系统睡眠/唤醒通知，统一转发给所有模块。
 //
 
 import AppKit
 
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
-    private var store: UsageStore?
-    private var tracker: SpeedTracker?
-    private var controller: StatusItemController?
+    private let registry = ModuleRegistry()
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
 
-        let store = UsageStore()
-        let tracker = SpeedTracker(store: store)
-        let controller = StatusItemController(tracker: tracker)
-
-        self.store = store
-        self.tracker = tracker
-        self.controller = controller
-
-        tracker.start()
+        // 注册顺序 ≈ 菜单栏出现顺序（macOS 默认新加的在最左）
+        // 先注册 Network（更靠右）再注册 Memory（更靠左）
+        registry.register(NetworkModule())
+        registry.register(MemoryModule())
+        registry.activate()
 
         let wsCenter = NSWorkspace.shared.notificationCenter
         wsCenter.addObserver(
@@ -40,16 +37,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationWillTerminate(_ notification: Notification) {
-        tracker?.stop()
+        registry.stopAll()
         UserDefaults.standard.synchronize()
     }
 
     @objc private func handleWillSleep() {
-        tracker?.stop()
+        registry.stopAll()
     }
 
     @objc private func handleDidWake() {
-        tracker?.markRebaseline()
-        tracker?.start()
+        registry.wakeAll()
     }
 }

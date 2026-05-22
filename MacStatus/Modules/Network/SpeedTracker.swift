@@ -1,6 +1,8 @@
 //
 //  SpeedTracker.swift
-//  test
+//  MacStatus
+//
+//  Network 模块核心：1s 差分 + 4GB 回绕处理 + sanity check + 持久化分派。
 //
 
 import Foundation
@@ -17,13 +19,13 @@ final class SpeedTracker: ObservableObject {
     @Published private(set) var todaySnapshot: [String: IfaceUsage] = [:]
     @Published private(set) var monthSnapshot: [String: IfaceUsage] = [:]
 
-    let store: UsageStore
+    let store: NetworkUsageStore
 
     private var previous: [String: InterfaceSnapshot] = [:]
     private var needsRebaseline: Bool = true
     private var timer: DispatchSourceTimer?
 
-    init(store: UsageStore) {
+    init(store: NetworkUsageStore) {
         self.store = store
         self.todaySnapshot = store.today
         self.monthSnapshot = store.month

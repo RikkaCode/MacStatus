@@ -1,6 +1,6 @@
 //
 //  ByteFormat.swift
-//  test
+//  MacStatus
 //
 
 import Foundation

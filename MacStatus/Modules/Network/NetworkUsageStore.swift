@@ -1,6 +1,8 @@
 //
-//  UsageStore.swift
-//  test
+//  NetworkUsageStore.swift
+//  MacStatus
+//
+//  Network 模块的 UserDefaults 持久化层：分接口今日/本月累计 + 跨日/跨月归档。
 //
 
 import Foundation
@@ -11,7 +13,7 @@ struct IfaceUsage: Codable, Equatable, Sendable {
 }
 
 @MainActor
-final class UsageStore {
+final class NetworkUsageStore {
     private let defaults: UserDefaults
     private let todayKey = "usage.today.json"
     private let todayDateKey = "usage.today.date"

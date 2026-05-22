@@ -1,6 +1,8 @@
 //
 //  NetworkSampler.swift
-//  test
+//  MacStatus
+//
+//  nonisolated 接口采样：直接 getifaddrs(3)，过滤回环/虚拟接口；返回 UInt64 字节计数。
 //
 
 import Darwin

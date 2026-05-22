@@ -1,11 +1,13 @@
 //
-//  StatsView.swift
-//  test
+//  NetworkDetailView.swift
+//  MacStatus
+//
+//  Network 模块的 popover 详情视图：实时速度 + 今日/本月分接口累计。
 //
 
 import SwiftUI
 
-struct StatsView: View {
+struct NetworkDetailView: View {
     @ObservedObject var tracker: SpeedTracker
 
     var body: some View {
