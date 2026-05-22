@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		A65A48EF2FBFF4CF00EFD1C4 /* test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A65A48EF2FBFF4CF00EFD1C4 /* test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = test.app; path = NetSpeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		A65A48F12FBFF4CF00EFD1C4 /* test */ = {
+		A65A48F12FBFF4CF00EFD1C4 /* MacStatus */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = test;
+			path = MacStatus;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -32,7 +32,7 @@
 		A65A48E62FBFF4CF00EFD1C4 = {
 			isa = PBXGroup;
 			children = (
-				A65A48F12FBFF4CF00EFD1C4 /* test */,
+				A65A48F12FBFF4CF00EFD1C4 /* MacStatus */,
 				A65A48F02FBFF4CF00EFD1C4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,7 +61,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				A65A48F12FBFF4CF00EFD1C4 /* test */,
+				A65A48F12FBFF4CF00EFD1C4 /* MacStatus */,
 			);
 			name = test;
 			packageProductDependencies = (
@@ -85,7 +85,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A65A48EA2FBFF4CF00EFD1C4 /* Build configuration list for PBXProject "test" */;
+			buildConfigurationList = A65A48EA2FBFF4CF00EFD1C4 /* Build configuration list for PBXProject "MacStatus" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -255,14 +255,16 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = NetSpeed;
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = test.test;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.rikkacode.NetSpeed;
+				PRODUCT_NAME = NetSpeed;
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -285,14 +287,16 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = NetSpeed;
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = test.test;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.rikkacode.NetSpeed;
+				PRODUCT_NAME = NetSpeed;
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -306,7 +310,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A65A48EA2FBFF4CF00EFD1C4 /* Build configuration list for PBXProject "test" */ = {
+		A65A48EA2FBFF4CF00EFD1C4 /* Build configuration list for PBXProject "MacStatus" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A65A48F82FBFF4D000EFD1C4 /* Debug */,
