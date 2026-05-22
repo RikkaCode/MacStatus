@@ -44,15 +44,17 @@
 
 ## 🛠 构建与安装
 
+> ⚠️ 仓库**不包含 `.xcodeproj` 工程文件**。clone 后需要自行在 Xcode 新建一个 macOS App 工程，然后把 `MacStatus/` 目录下的所有 `.swift` 文件加入 target。
+> 关键 build settings：
+> - Deployment Target: macOS 26.5+
+> - `INFOPLIST_KEY_LSUIElement = YES`（隐藏 Dock 图标）
+> - `SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor`
+> - 启用 App Sandbox（不需要任何 network entitlement）
+
 ### 用 Xcode（推荐）
 
-```bash
-git clone https://github.com/<your-username>/MacStatus.git
-cd MacStatus
-open MacStatus.xcodeproj
-```
-
-`Cmd-R` 直接运行；或 `Product → Archive` 打 Release 包。
+1. clone 仓库并按上述说明建好工程
+2. `Cmd-R` 直接运行；或 `Product → Archive` 打 Release 包
 
 ### 命令行 Release 构建
 
@@ -91,8 +93,7 @@ build/Build/Products/Release/NetSpeed.app
 
 ```
 MacStatus/
-├── MacStatus.xcodeproj/              # Xcode 工程
-├── MacStatus/                        # 源码根
+├── MacStatus/                        # 源码根（.xcodeproj 不入库，需自建）
 │   ├── App/                          # @main 入口 + Assets
 │   │   ├── MacStatusApp.swift
 │   │   ├── AppDelegate.swift         # ModuleRegistry 装配 + sleep/wake 派发

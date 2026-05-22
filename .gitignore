@@ -31,6 +31,10 @@ project.xcworkspace/xcuserdata/
 *.xcscmblueprint
 *.xccheckout
 
+# ----- Xcode project（按项目策略不入库；clone 后需手动重建工程） -----
+*.xcodeproj/
+*.xcworkspace/
+
 # ----- Xcode build / derived data -----
 build/
 DerivedData/
