@@ -104,7 +104,7 @@ MacStatus/
 
 ## 📄 License
 
-[选择并补充：MIT / Apache-2.0 / 私有未授权]
+**MIT License** — 详见 [LICENSE](./LICENSE)。可自由复制、修改、分发、商用，唯一要求是保留原版权与许可声明。
 
 ## 🤝 贡献
 
