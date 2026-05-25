@@ -13,8 +13,7 @@ import SwiftUI
 @MainActor
 final class NetworkModule: StatModule {
     let id = "network"
-
-    var statusItemWidth: CGFloat { NetworkStatusRenderer.statusItemWidth }
+    let displayName = "网络监控"
 
     private let store: NetworkUsageStore
     private let tracker: SpeedTracker

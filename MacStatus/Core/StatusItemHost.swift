@@ -4,8 +4,10 @@
 //
 //  把一个 StatModule 绑定到一个 NSStatusItem + NSPopover。
 //  - 左键 / Ctrl+左键：切换 popover
-//  - 右键：弹出"退出"菜单
+//  - 右键：弹出三项菜单（打开主面板… / 隐藏 [模块名] / 退出 MacStatus）
 //  - 订阅模块的 statusImagePublisher，自动刷新菜单栏图像
+//
+//  registry / controlPanel 都是 weak，避免和 app 级单例形成强环。
 //
 
 import AppKit
@@ -15,13 +17,22 @@ import SwiftUI
 @MainActor
 final class StatusItemHost: NSObject {
     private let module: StatModule
+    private weak var registry: ModuleRegistry?
+    private weak var controlPanel: ControlPanelWindowController?
+
     private let statusItem: NSStatusItem
     private let popover = NSPopover()
     private var cancellables: Set<AnyCancellable> = []
 
-    init(module: StatModule) {
+    init(
+        module: StatModule,
+        registry: ModuleRegistry?,
+        controlPanel: ControlPanelWindowController?
+    ) {
         self.module = module
-        self.statusItem = NSStatusBar.system.statusItem(withLength: module.statusItemWidth)
+        self.registry = registry
+        self.controlPanel = controlPanel
+        self.statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         super.init()
         setupButton()
         setupPopover()
@@ -52,6 +63,19 @@ final class StatusItemHost: NSObject {
             .store(in: &cancellables)
     }
 
+    // MARK: - Visibility
+
+    /// 设置该模块的菜单栏槽位可见性。隐藏前如果 popover 还开着先关掉，
+    /// 否则 popover 会浮空显示。
+    func setVisible(_ visible: Bool) {
+        if !visible, popover.isShown {
+            popover.performClose(nil)
+        }
+        statusItem.isVisible = visible
+    }
+
+    // MARK: - Click routing
+
     @objc private func handleClick(_ sender: Any?) {
         let event = NSApp.currentEvent
         let isRight = event?.type == .rightMouseUp
@@ -64,23 +88,45 @@ final class StatusItemHost: NSObject {
         }
     }
 
-    private lazy var contextMenu: NSMenu = {
+    private func makeContextMenu() -> NSMenu {
         let menu = NSMenu()
         menu.autoenablesItems = false
+
+        let openItem = NSMenuItem(
+            title: "打开主面板…",
+            action: #selector(openControlPanel),
+            keyEquivalent: ","
+        )
+        openItem.target = self
+        menu.addItem(openItem)
+
+        menu.addItem(.separator())
+
+        let hideItem = NSMenuItem(
+            title: "隐藏 \(module.displayName)",
+            action: #selector(hideThisModule),
+            keyEquivalent: ""
+        )
+        hideItem.target = self
+        menu.addItem(hideItem)
+
+        menu.addItem(.separator())
+
         let quitItem = NSMenuItem(
-            title: "退出 NetSpeed",
+            title: "退出 MacStatus",
             action: #selector(quit),
             keyEquivalent: "q"
         )
         quitItem.target = self
-        quitItem.isEnabled = true
         menu.addItem(quitItem)
+
         return menu
-    }()
+    }
 
     private func showContextMenu() {
         if popover.isShown { popover.performClose(nil) }
-        statusItem.menu = contextMenu
+        let menu = makeContextMenu()
+        statusItem.menu = menu
         statusItem.button?.performClick(nil)
         statusItem.menu = nil
     }
@@ -93,6 +139,16 @@ final class StatusItemHost: NSObject {
             popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
             popover.contentViewController?.view.window?.makeKey()
         }
+    }
+
+    // MARK: - Menu actions
+
+    @objc private func openControlPanel() {
+        controlPanel?.showWindow()
+    }
+
+    @objc private func hideThisModule() {
+        registry?.setVisible(id: module.id, visible: false)
     }
 
     @objc private func quit() {

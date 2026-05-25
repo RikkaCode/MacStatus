@@ -15,11 +15,12 @@ protocol StatModule: AnyObject {
     /// 稳定唯一标识，用于 UserDefaults 命名空间 / 调试日志
     var id: String { get }
 
-    /// 菜单栏 NSStatusItem 固定宽度（px）。两行紧凑文字一般 72；单行百分比一般 56
-    var statusItemWidth: CGFloat { get }
+    /// 模块在主面板列表 / 右键菜单中显示的中文名，例如"网络监控"
+    var displayName: String { get }
 
     /// 当前要在菜单栏渲染的图像。模块通过 send(_:) 推送更新；
-    /// 实现端只需要在数值变化时调用一次 renderer 即可
+    /// 实现端只需要在数值变化时调用一次 renderer 即可。
+    /// 图像宽度由 renderer 按当前文字内容动态决定，status item 使用 variableLength。
     var statusImagePublisher: AnyPublisher<NSImage, Never> { get }
 
     /// 启动采样 / 定时器

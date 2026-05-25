@@ -12,8 +12,7 @@ import SwiftUI
 @MainActor
 final class MemoryModule: StatModule {
     let id = "memory"
-
-    var statusItemWidth: CGFloat { MemoryStatusRenderer.statusItemWidth }
+    let displayName = "内存监控"
 
     private let tracker = MemoryTracker()
 
